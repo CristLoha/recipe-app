@@ -12,7 +12,7 @@ Harap dicatat bahwa aplikasi ini adalah sebuah latihan dan masih dalam proses pe
 
 | Onboarding Page | Sign-In Page | Sign-Up Page |
 | :-------------: | :----------: | :----------: |
-| ![Onboarding Page](assets/onboarding_page.png) | ![Sign-In Page](assets/sign-inpage.png) | ![Sign-Up Page](assets/sign-uppage.png) |
+| ![Onboarding Page](assets/images/onboarding_page.png) | ![Sign-In Page](assets/images/sign-inpage.png) | ![Sign-Up Page](assets/images/sign-uppage.png) |
 
 ## Sumber Desain
 
