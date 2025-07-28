@@ -1,16 +1,17 @@
-# recipe_app
+# Recipe App
 
-A new Flutter project.
+Aplikasi resep makanan yang dibuat dengan Flutter. Proyek ini adalah latihan untuk mengimplementasikan slicing UI dari desain yang ada di Figma.
 
-## Getting Started
+## Screenshot
 
-This project is a starting point for a Flutter application.
+| Onboarding Page | Sign-In Page | Sign-Up Page |
+| :-------------: | :----------: | :----------: |
+| ![Onboarding Page](assets/images/onbarding_page.png) | ![Sign-In Page](assets/images/sign-inpage.png) | ![Sign-Up Page](assets/images/sign-uppage.png) |
 
-A few resources to get you started if this is your first Flutter project:
+## Sumber Desain
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Desain UI untuk aplikasi ini dibuat di Figma dan dapat diakses melalui link berikut:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **[Recipe App Design on Figma](https://www.uistore.design/items/chefio-recipe-free-app-ui-kit-for-figma/)**
+
+Terima kasih kepada desainer atas desainnya yang keren!
