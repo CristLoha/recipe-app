@@ -1,10 +1,10 @@
 # Recipe App
 
-Aplikasi resep makanan yang dibuat dengan Flutter. Proyek ini adalah latihan untuk mengimplementasikan slicing UI dari desain yang ada di Figma.
+Aplikasi resep makanan yang dibuat dengan Flutter. Project ini adalah latihan untuk mengimplementasikan slicing UI dari desain yang ada di Figma.
 
-## Status Proyek
+## Status Project
 
-**⚠️ Peringatan: Proyek ini masih dalam tahap pengembangan.**
+**⚠️ Peringatan: Project ini masih dalam tahap pengembangan.**
 
 Harap dicatat bahwa aplikasi ini adalah sebuah latihan dan masih dalam proses pengerjaan. Beberapa fitur mungkin belum diimplementasikan atau belum berfungsi dengan sempurna.
 
