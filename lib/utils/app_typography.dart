@@ -4,8 +4,6 @@ import 'package:recipe_app/utils/app_colors.dart';
 import 'package:recipe_app/utils/size_helper.dart';
 
 class AppTypography {
-  // Heder
-
   static TextStyle h1(BuildContext context) => GoogleFonts.inter(
     fontSize: SizeHelper.fromFigmaWidth(22, context),
     height: 32 / 22,
@@ -21,35 +19,33 @@ class AppTypography {
   );
 
   static TextStyle h3(BuildContext context) => GoogleFonts.inter(
-        fontSize: SizeHelper.fromFigmaFontSize(15, context),
-        height: 25 / 15,
-        fontWeight: FontWeight.bold,
-        color: AppColors.mainText,
-      );
-
-  // Body
+    fontSize: SizeHelper.fromFigmaFontSize(15, context),
+    height: 25 / 15,
+    fontWeight: FontWeight.bold,
+    color: AppColors.mainText,
+  );
 
   static TextStyle p1(BuildContext context) => GoogleFonts.inter(
-        fontSize: SizeHelper.fromFigmaFontSize(17, context),
-        height: 27 / 17,
-        fontWeight: FontWeight.w500,
-        color: AppColors.mainText,
-      );
+    fontSize: SizeHelper.fromFigmaFontSize(17, context),
+    height: 27 / 17,
+    fontWeight: FontWeight.w500,
+    color: AppColors.mainText,
+  );
 
   static TextStyle p2(BuildContext context) => GoogleFonts.inter(
-        fontSize: SizeHelper.fromFigmaFontSize(15, context),
-        height: 25 / 15,
-        fontWeight: FontWeight.w500,
-        color: AppColors.mainText,
-      );
+    fontSize: SizeHelper.fromFigmaFontSize(15, context),
+    height: 25 / 15,
+    fontWeight: FontWeight.w500,
+    color: AppColors.mainText,
+  );
 
   static TextStyle small(BuildContext context) => GoogleFonts.inter(
-        fontSize: SizeHelper.fromFigmaFontSize(12, context),
-        height: 15 / 12,
-        fontWeight: FontWeight.w500,
-        color: AppColors.mainText,
-      );
-
+    fontSize: SizeHelper.fromFigmaFontSize(12, context),
+    height: 15 / 12,
+    letterSpacing: 0.5,
+    fontWeight: FontWeight.w500,
+    color: AppColors.mainText,
+  );
 
   static TextStyle buttonIcon({
     required BuildContext context,
@@ -62,4 +58,11 @@ class AppTypography {
       color: color,
     );
   }
+
+  static TextStyle textOtp(BuildContext context) => GoogleFonts.inter(
+    fontSize: SizeHelper.fromFigmaFontSize(34, context),
+    letterSpacing: 0.7,
+    fontWeight: FontWeight.w500,
+    color: AppColors.otpColor,
+  );
 }

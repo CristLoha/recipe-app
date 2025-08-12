@@ -9,6 +9,7 @@ environment:
   sdk: ^3.8.1
 
 dependencies:
+  auto_size_text: ^3.0.0
   bloc: ^9.0.0
   cupertino_icons: ^1.0.8
   equatable: ^2.0.7
@@ -19,6 +20,7 @@ dependencies:
   gap: ^3.0.1
   go_router: ^16.0.0
   google_fonts: ^6.2.1
+  persistent_bottom_nav_bar: ^6.2.1
 
 dev_dependencies:
   flutter_lints: ^5.0.0

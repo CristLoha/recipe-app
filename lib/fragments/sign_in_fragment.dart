@@ -58,8 +58,9 @@ class SignInFragment extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const AppTextField(
-          hintText: 'Email or phone number',
+          hintText: 'Email',
           prefixIcon: AppIcons.message,
+          keyboardType: TextInputType.emailAddress,
         ),
         Gap(SizeHelper.fromFigmaHeight(16, context)),
         const AppTextField(

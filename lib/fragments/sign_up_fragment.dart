@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:recipe_app/cubit/password_validation/password_validation_cubit.dart';
 import 'package:recipe_app/cubit/password_validation/password_validation_state.dart';
 import 'package:recipe_app/utils/app_assets.dart';
 import 'package:recipe_app/utils/app_colors.dart';
+import 'package:recipe_app/utils/app_routes.dart';
 import 'package:recipe_app/utils/app_typography.dart';
 import 'package:recipe_app/utils/size_helper.dart';
 import 'package:recipe_app/widgets/app_button.dart';
@@ -21,32 +23,46 @@ class SignUpFragment extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            body: ListView(
-              padding: EdgeInsets.only(
-                left: 24,
-                right: 24,
-                top:
-                    SizeHelper.safePadding(context).top +
-                    SizeHelper.fromFigmaWidth(107, context),
-                bottom: SizeHelper.safePadding(context).bottom + 41,
-              ),
-              children: [
-                _buildHeader(context),
-                Gap(SizeHelper.fromFigmaHeight(32, context)),
-                _buildForm(context),
-                BlocBuilder<PasswordValidationCubit, PasswordValidationState>(
-                  builder: (context, state) {
-                    // Saat validasi muncul, kurangi gap agar posisi tombol stabil.
-                    // Saat validasi hilang, kembalikan gap ke 72.
-                    final gapHeight = (state is PasswordValidationUpdated)
-                        ? 24.0
-                        : 72.0;
-                    return Gap(SizeHelper.fromFigmaHeight(gapHeight, context));
-                  },
+            body: Align(
+              alignment: Alignment.center,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: SizeHelper.fromFigmaWidth(600, context),
                 ),
-                _buildAuthButton(context),
-                Gap(SizeHelper.fromFigmaHeight(24, context)),
-              ],
+                child: ListView(
+                  padding: EdgeInsets.only(
+                    left: 24,
+                    right: 24,
+                    top:
+                        SizeHelper.safePadding(context).top +
+                        SizeHelper.fromFigmaWidth(107, context),
+                    bottom: SizeHelper.safePadding(context).bottom + 41,
+                  ),
+                  children: [
+                    _buildHeader(context),
+                    Gap(SizeHelper.fromFigmaHeight(32, context)),
+                    _buildForm(context),
+                    BlocSelector<
+                      PasswordValidationCubit,
+                      PasswordValidationState,
+                      double
+                    >(
+                      selector: (state) {
+                        return (state is PasswordValidationUpdated)
+                            ? 24.0
+                            : 72.0;
+                      },
+                      builder: (context, gapHeight) {
+                        return Gap(
+                          SizeHelper.fromFigmaHeight(gapHeight, context),
+                        );
+                      },
+                    ),
+                    _buildAuthButton(context),
+                    Gap(SizeHelper.fromFigmaHeight(24, context)),
+                  ],
+                ),
+              ),
             ),
           );
         },
@@ -74,8 +90,9 @@ class SignUpFragment extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const AppTextField(
-          hintText: 'Email or phone number',
+          hintText: 'Email',
           prefixIcon: AppIcons.message,
+             keyboardType: TextInputType.emailAddress,
         ),
         Gap(SizeHelper.fromFigmaHeight(16, context)),
         AppTextField(
@@ -108,7 +125,7 @@ class SignUpFragment extends StatelessWidget {
               const Gap(16),
               _buildValidationRow(
                 context,
-                'Atleast 6 characters',
+                'At least 6 characters',
                 state.hasSixCharacters,
               ),
               const Gap(16),
@@ -120,7 +137,6 @@ class SignUpFragment extends StatelessWidget {
             ],
           );
         }
-        // Return an empty widget if the state is initial
         return const SizedBox.shrink();
       },
     );
@@ -136,7 +152,6 @@ class SignUpFragment extends StatelessWidget {
             BlendMode.srcIn,
           ),
         ),
-
         const Gap(8),
         Text(
           text,
@@ -151,7 +166,11 @@ class SignUpFragment extends StatelessWidget {
   Widget _buildAuthButton(BuildContext context) {
     return Column(
       children: [
-        AppButton(label: "Sign Up", onPressed: () {}, type: ButtonType.primary),
+        AppButton(
+          label: "Sign Up",
+          onPressed: () => context.go(AppRoutes.verification),
+          type: ButtonType.primary,
+        ),
       ],
     );
   }

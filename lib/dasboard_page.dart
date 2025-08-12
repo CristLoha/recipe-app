@@ -1,91 +1,159 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:recipe_app/cubit/dashboard_cubit.dart';
+
+import 'package:recipe_app/cubit/dasboard_cubit.dart';
 import 'package:recipe_app/utils/app_colors.dart';
 import 'package:recipe_app/utils/app_assets.dart';
-import 'package:recipe_app/utils/app_routes.dart';
 import 'package:recipe_app/utils/app_typography.dart';
 
-class DasboardPage extends StatelessWidget {
-  final Widget child;
-  final String currentRouteName;
-  const DasboardPage({
-    super.key,
-    required this.child,
-    required this.currentRouteName,
-  });
+class DashboardPage extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
+
+  const DashboardPage({super.key, required this.navigationShell});
+
+  void _onItemTapped(BuildContext context, int tappedIndex) {
+    if (tappedIndex == 2) {
+      return;
+    }
+
+    final int shellIndex = tappedIndex > 2 ? tappedIndex - 1 : tappedIndex;
+
+    context.read<DashboardCubit>().changeIndex(shellIndex);
+    navigationShell.goBranch(
+      shellIndex,
+      initialLocation: shellIndex == navigationShell.currentIndex,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Map<int, String> routeNames = {
-      0: AppRoutes.home,
-      1: AppRoutes.upload,
-      2: AppRoutes.notification,
-      3: AppRoutes.profile,
-    };
+    return Scaffold(
+      extendBody: true,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Fitur Scan akan segera hadir! ✨'),
+              backgroundColor: AppColors.primary,
 
-    void onItemTapped(BuildContext context, int index) {
-      final cubit = context.read<DashboardCubit>();
-      cubit.changeIndex(index);
-      context.go(routeNames[index]!);
-    }
-
-    return BlocProvider(
-      create: (context) => DashboardCubit()..setIndex(currentRouteName),
-
-      child: Scaffold(
-        bottomNavigationBar: BlocBuilder<DashboardCubit, int>(
-          builder: (context, currentIndex) {
-            return BottomNavigationBar(
-              currentIndex: currentIndex,
-              showSelectedLabels: true,
-              showUnselectedLabels: true,
-              type: BottomNavigationBarType.fixed,
-              unselectedLabelStyle: AppTypography.small(context),
-              selectedLabelStyle: AppTypography.small(context),
-              selectedItemColor: AppColors.primary,
-              unselectedItemColor: AppColors.secondaryText,
-              onTap: (index) => onItemTapped(context, index),
-              items: [
-                _buildNavItem(currentIndex, AppIcons.home, 'Home', 0),
-                _buildNavItem(currentIndex, AppIcons.upload, 'Upload', 1),
-                _buildNavItem(
-                  currentIndex,
-                  AppIcons.notification,
-                  'Notification',
-                  2,
-                ),
-                _buildNavItem(currentIndex, AppIcons.profile, 'Profile', 3),
-              ],
-            );
-          },
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        },
+        backgroundColor: AppColors.primary,
+        shape: const CircleBorder(),
+        elevation: 4.0,
+        child: SvgPicture.asset(
+          AppIcons.scan,
+          width: 28,
+          height: 28,
+          colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
         ),
-        body: child,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+      body: navigationShell,
+
+      bottomNavigationBar: BlocBuilder<DashboardCubit, int>(
+        builder: (context, currentShellIndex) {
+          int bottomBarIndex = currentShellIndex;
+          if (currentShellIndex >= 2) {
+            bottomBarIndex = currentShellIndex + 1;
+          }
+
+          return BottomNavigationBar(
+            currentIndex: bottomBarIndex,
+
+            onTap: (index) => _onItemTapped(context, index),
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white,
+            selectedItemColor: AppColors.primary,
+            unselectedItemColor: AppColors.secondaryText.withOpacity(0.6),
+            selectedLabelStyle: AppTypography.small(
+              context,
+            ).copyWith(fontWeight: FontWeight.w600),
+            unselectedLabelStyle: AppTypography.small(
+              context,
+            ).copyWith(fontWeight: FontWeight.w400),
+
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  AppIcons.home,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.secondaryText.withOpacity(0.6),
+                    BlendMode.srcIn,
+                  ),
+                ),
+                activeIcon: SvgPicture.asset(
+                  AppIcons.home,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.primary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  AppIcons.upload,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.secondaryText.withOpacity(0.6),
+                    BlendMode.srcIn,
+                  ),
+                ),
+                activeIcon: SvgPicture.asset(
+                  AppIcons.upload,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.primary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'Upload',
+              ),
+
+              const BottomNavigationBarItem(icon: SizedBox.shrink(), label: ''),
+
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  AppIcons.notification,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.secondaryText.withOpacity(0.6),
+                    BlendMode.srcIn,
+                  ),
+                ),
+                activeIcon: SvgPicture.asset(
+                  AppIcons.notification,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.primary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'Notification',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  AppIcons.profile,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.secondaryText.withOpacity(0.6),
+                    BlendMode.srcIn,
+                  ),
+                ),
+                activeIcon: SvgPicture.asset(
+                  AppIcons.profile,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.primary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'Profile',
+              ),
+            ],
+          );
+        },
       ),
     );
   }
-}
-
-BottomNavigationBarItem _buildNavItem(
-  int currentIndex,
-  String iconPath,
-  String label,
-  int index,
-) {
-  final isSelected = index == currentIndex;
-  return BottomNavigationBarItem(
-    icon: Padding(
-      padding: const EdgeInsets.only(bottom: 12, top: 11),
-      child: SvgPicture.asset(
-        iconPath,
-        colorFilter: ColorFilter.mode(
-          isSelected ? AppColors.primary : AppColors.secondaryText,
-          BlendMode.srcIn,
-        ),
-      ),
-    ),
-    label: label,
-  );
 }

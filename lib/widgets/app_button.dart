@@ -61,7 +61,7 @@ class AppButton extends StatelessWidget {
       ButtonType.primary => Colors.white,
       ButtonType.outlinePrimary => AppColors.primary,
       ButtonType.secondary => AppColors.mainText,
-      ButtonType.outlineSecondary => AppColors.mainText,
+      ButtonType.outlineSecondary => AppColors.secondaryText,
       ButtonType.google => Colors.white,
     };
 

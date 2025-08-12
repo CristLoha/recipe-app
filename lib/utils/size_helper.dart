@@ -1,36 +1,42 @@
 import 'package:flutter/material.dart';
 
 class SizeHelper {
-  // Private constructor to prevent instantiation of this utility class.
   SizeHelper._();
 
-  // Ukuran desain di Figma (misal: iPhone 11 Pro / X)
+  // Ukuran desain dari Figma (dalam potrait)
   static const double figmaWidth = 375;
   static const double figmaHeight = 812;
 
   /// Ambil ukuran layar device
   static Size screenSize(BuildContext context) => MediaQuery.of(context).size;
 
-  /// Skala dari Figma width ke device width
-  static double fromFigmaWidth(double value, BuildContext context) =>
-      screenSize(context).width * (value / figmaWidth);
+  /// Cek apakah mode landscape
+  static bool isLandscape(BuildContext context) =>
+      MediaQuery.of(context).orientation == Orientation.landscape;
 
-  /// Skala dari Figma height ke device height
-  static double fromFigmaHeight(double value, BuildContext context) =>
-      screenSize(context).height * (value / figmaHeight);
+  /// Ambil rasio width yang menyesuaikan orientasi
+  static double fromFigmaWidth(double value, BuildContext context) {
+    final size = screenSize(context);
+    final width = isLandscape(context) ? size.height : size.width;
+    return width * (value / figmaWidth);
+  }
 
-  /// Skala untuk font size.
-  /// Umumnya, penskalaan berdasarkan lebar (width) lebih disukai untuk font
-  /// agar tata letak teks tidak rusak pada perangkat yang sangat tinggi atau pendek.
+  /// Ambil rasio height yang menyesuaikan orientasi
+  static double fromFigmaHeight(double value, BuildContext context) {
+    final size = screenSize(context);
+    final height = isLandscape(context) ? size.width : size.height;
+    return height * (value / figmaHeight);
+  }
+
+  /// Untuk font size (lebih aman pakai rasio lebar)
   static double fromFigmaFontSize(double fontSize, BuildContext context) =>
       fromFigmaWidth(fontSize, context);
 
-  /// Skala untuk nilai yang seharusnya seragam (seperti radius atau ukuran ikon).
-  /// Menggunakan skala lebar sebagai default untuk konsistensi visual.
+  /// Radius atau icon size (gunakan rasio lebar)
   static double fromFigmaRadius(double value, BuildContext context) =>
       fromFigmaWidth(value, context);
 
-  /// Ambil padding safe area (top, bottom, dll)
+  /// Padding safe area
   static EdgeInsets safePadding(BuildContext context) =>
       MediaQuery.of(context).padding;
 }
